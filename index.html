@@ -129,7 +129,7 @@
         .hero-content { position: relative; z-index: 2; max-width: 800px; }
 
         .hero-logo-large {
-            width: 180px; /* Un poco más grande para destacar */
+            width: 180px; 
             height: auto;
             margin-bottom: 25px;
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
@@ -146,7 +146,6 @@
             background: linear-gradient(to bottom, var(--gold), var(--gold-dark));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            /* Fallback para navegadores antiguos */
             color: var(--gold); 
         }
         
@@ -186,7 +185,7 @@
         }
 
         .feature-box {
-            background: rgba(30, 30, 30, 0.7); /* Un poco más oscuro para legibilidad */
+            background: rgba(30, 30, 30, 0.7); 
             backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: var(--border-radius);
@@ -252,6 +251,7 @@
             position: relative;
             border: 1px solid rgba(255,255,255,0.05);
             transform: translateZ(0); 
+            cursor: pointer; /* Indicar que es cliqueable */
         }
         .card:hover { transform: translateY(-8px); border-color: var(--gold); box-shadow: var(--shadow-hard); }
 
@@ -280,17 +280,41 @@
         .card:hover h3 { color: var(--gold); }
         .card p { color: #999; font-size: 0.95rem; line-height: 1.5; }
 
-        /* Overlay para galería (Efecto Lupa) */
+        /* Overlay para galería (Lupa) */
         .gallery-overlay {
             position: absolute; inset: 0;
             background: rgba(0,0,0,0.4);
             display: flex; align-items: center; justify-content: center;
             opacity: 0; transition: 0.3s;
-            pointer-events: none; /* Permite click en imagen si fuera necesario */
         }
         .card:hover .gallery-overlay { opacity: 1; }
-        .gallery-overlay i { font-size: 2rem; color: var(--gold); transform: scale(0); transition: 0.3s; }
+        .gallery-overlay i { font-size: 2.5rem; color: var(--gold); transform: scale(0); transition: 0.3s; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8)); }
         .card:hover .gallery-overlay i { transform: scale(1); }
+
+        /* --- LIGHTBOX (Visor de Imágenes) --- */
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            display: none;
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox img {
+            max-width: 90%; max-height: 90vh;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: absolute; top: 20px; right: 30px;
+            font-size: 3rem; color: #fff; cursor: pointer;
+            transition: 0.3s;
+        }
+        .lightbox-close:hover { color: var(--gold); transform: rotate(90deg); }
 
         /* --- 6. FOOTER --- */
         footer {
@@ -389,6 +413,12 @@
 </head>
 <body>
 
+    <!-- Lightbox (Visor de Imágenes) -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="Imagen ampliada">
+    </div>
+
     <nav>
         <a href="#" class="brand-container">
             <img src="img/logo/Logo.png" alt="Aron Logo" class="brand-logo-img">
@@ -457,63 +487,62 @@
 
         <!-- 1. BARBERÍA -->
         <div id="barberia" class="grid-container active">
-            <div class="card"><div class="card-img"><img src="img/low fade.jpeg" loading="lazy" alt="Low Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Low Fade</h3><p>Degradado bajo con navaja. Acabado limpio y moderno.</p></div></div>
-            <div class="card"><div class="card-img"><img src="img/Mid fade.png" loading="lazy" alt="Mid Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Mid Fade</h3><p>El balance perfecto a altura media.</p></div></div>
-            <div class="card"><div class="card-img"><img src="img/High Fade.png" loading="lazy" alt="High Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>High Fade</h3><p>Alto contraste para un estilo urbano.</p></div></div>
-            <div class="card"><div class="card-img"><img src="img/brust fade.png" loading="lazy" alt="Burst Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Burst Fade</h3><p>Degradado circular alrededor de la oreja.</p></div></div>
-            <div class="card"><div class="card-img"><img src="img/taper fade.png" loading="lazy" alt="Taper Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Taper Fade</h3><p>Limpieza suave en patillas y nuca.</p></div></div>
-            <div class="card"><div class="card-img"><img src="img/Mullet.png" loading="lazy" alt="Mullet"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Mullet</h3><p>Estilo clásico renovado.</p></div></div>
-            <div class="card"><div class="card-img"><img src="img/French Crop.png" loading="lazy" alt="French Crop"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>French Crop</h3><p>Flequillo recto y textura superior.</p></div></div>
-            <div class="card"><div class="card-img"><img src="img/Buzz Cut.png" loading="lazy" alt="Buzz Cut"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Buzz Cut</h3><p>Minimalismo puro y sin mantenimiento.</p></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/low fade.jpeg" loading="lazy" alt="Low Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Low Fade</h3><p>Degradado bajo con navaja. Acabado limpio y moderno.</p></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/Mid fade.png" loading="lazy" alt="Mid Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Mid Fade</h3><p>El balance perfecto a altura media.</p></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/High Fade.png" loading="lazy" alt="High Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>High Fade</h3><p>Alto contraste para un estilo urbano.</p></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/brust fade.png" loading="lazy" alt="Burst Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Burst Fade</h3><p>Degradado circular alrededor de la oreja.</p></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/taper fade.png" loading="lazy" alt="Taper Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Taper Fade</h3><p>Limpieza suave en patillas y nuca.</p></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/Mullet.png" loading="lazy" alt="Mullet"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Mullet</h3><p>Estilo clásico renovado.</p></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/French Crop.png" loading="lazy" alt="French Crop"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>French Crop</h3><p>Flequillo recto y textura superior.</p></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/Buzz Cut.png" loading="lazy" alt="Buzz Cut"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Buzz Cut</h3><p>Minimalismo puro y sin mantenimiento.</p></div></div>
         </div>
 
         <!-- 2. CLÁSICOS -->
         <div id="clasicos" class="grid-container gallery-grid">
-            <!-- NOTA: Se añaden overlays para mejor interacción -->
-            <div class="card"><div class="card-img"><img src="img/Corte clasico 1.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/Corte clasico 2.jpeg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte clasico 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte clasico 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte clasico 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte clasico 6.png" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte escolar.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte miliar.jpeg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/Corte clasico 1.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/Corte clasico 2.jpeg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte clasico 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte clasico 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte clasico 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte clasico 6.png" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte escolar.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte miliar.jpeg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
         </div>
 
         <!-- 3. DAMAS -->
         <div id="damas" class="grid-container gallery-grid">
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 1.jpeg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 2.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 6.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 7.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 8.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 9.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 10.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 11.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para mujer 12.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 1.jpeg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 2.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 6.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 7.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 8.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 9.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 10.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 11.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para mujer 12.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
         </div>
 
         <!-- 4. NIÑOS Y NIÑAS -->
         <div id="ninos" class="grid-container gallery-grid">
-            <div class="card"><div class="card-img"><img src="img/corte para niña 1.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niña 2.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niña 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niña 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niña 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niña 6.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niña 7.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niña 8.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niños1.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niños 2.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niños 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niños 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niños 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niños 6.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niños 7.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
-            <div class="card"><div class="card-img"><img src="img/corte para niños 8.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niña 1.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niña 2.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niña 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niña 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niña 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niña 6.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niña 7.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niña 8.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niños1.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niños 2.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niños 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niños 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niños 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niños 6.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niños 7.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
+            <div class="card" onclick="openLightbox(this)"><div class="card-img"><img src="img/corte para niños 8.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div></div>
         </div>
 
         <!-- 5. SALUD -->
@@ -531,7 +560,6 @@
                 <h3>CONTACTO</h3>
                 <p><i class="fas fa-map-marker-alt"></i> La Isla, Pasadizo 1, Arequipa (Av. Perú 18)</p>
                 <p><i class="fas fa-phone-alt"></i> +51 989 418 338</p>
-                <!-- EMAIL REMOVIDO POR SOLICITUD -->
                 <p style="margin-top: 20px;"><i class="fas fa-clock"></i> Lun - Sáb: 9:00 AM - 5:30 PM</p>
             </div>
             <div class="footer-col reveal">
@@ -547,6 +575,7 @@
     <a href="https://wa.me/51989418338?text=Hola%20Aron,%20quiero%20agendar%20una%20cita." class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <script>
+        // --- 1. Tabs Logic ---
         function filterServices(category) {
             document.querySelectorAll('.grid-container').forEach(g => g.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -554,6 +583,7 @@
             event.currentTarget.classList.add('active');
         }
 
+        // --- 2. Mobile Menu ---
         const navMenu = document.getElementById('nav-menu');
         const hamburger = document.getElementById('hamburger');
         hamburger.addEventListener('click', () => {
@@ -568,6 +598,31 @@
             hamburger.querySelector('i').classList.remove('fa-times');
         }
 
+        // --- 3. Lightbox Logic (Visor de Imágenes) ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(element) {
+            // Obtener la imagen dentro de la tarjeta
+            const img = element.querySelector('img');
+            if (img) {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            }
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        // Cerrar al hacer clic fuera de la imagen
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // --- 4. Scroll Effects ---
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('nav');
             if(window.scrollY > 50) { nav.style.background = 'rgba(10, 10, 10, 0.95)'; nav.style.padding = '5px 5%'; }
