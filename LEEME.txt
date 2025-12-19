@@ -1,0 +1,21 @@
+GUÍA PARA EDITAR TU PÁGINA WEB - ARON BARBERÍA
+
+1. CAMBIAR IMÁGENES
+   - Crea una carpeta llamada "img" junto a tu archivo index.html.
+   - Guarda tus fotos allí (ejemplo: "corte1.jpg", "local.jpg").
+   - Abre index.html y busca las etiquetas <img>.
+   - Cambia esto: src="https://images.unsplash.com/..."
+   - Por esto:     src="img/corte1.jpg"
+
+2. EDITAR TEXTOS
+   - Abre index.html con el Bloc de Notas o VS Code.
+   - Busca el texto que quieras cambiar (ej: "S/ 15.00") y escríbelo nuevo.
+   - Guarda el archivo y recarga la página en tu navegador.
+
+3. HORARIOS Y CONTACTO
+   - Ya están actualizados en la parte inferior (Footer).
+   - Teléfono: 989418338
+   - Horario: 9:00 AM - 5:30 PM
+   - Dirección: La Isla, Pasadizo 1
+
+Si tienes dudas, ¡avísame!

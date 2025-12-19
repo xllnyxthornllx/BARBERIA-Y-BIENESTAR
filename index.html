@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aron BarberShop & Wellness en Arequipa. Cortes urbanos, clásicos y centro de fisioterapia profesional. Reserva tu cita hoy.">
+    <meta name="theme-color" content="#0f0f0f">
+    <title>ARON | Barbería & Centro de Terapia</title>
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="img/logo/Logo.png">
+    
+    <!-- Fuentes Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Iconos FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* --- 1. VARIABLES & RESET --- */
+        :root {
+            --gold: #d4af37;           
+            --gold-light: #f3dfa2;
+            --gold-dark: #a18320;
+            --bg-dark: #0f0f0f;        
+            --bg-panel: #141414;
+            --bg-card: #1a1a1a;        
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+            --physio-blue: #4cd137;    
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.3);
+            --shadow-hard: 0 15px 40px rgba(0,0,0,0.6);
+            --border-radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, .brand-logo-text, .tab-btn { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+
+        /* --- 2. NAVEGACIÓN PREMIUM --- */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-logo-img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+        .brand-container:hover .brand-logo-img { transform: scale(1.1); }
+
+        .brand-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .nav-menu { display: flex; gap: 30px; align-items: center; }
+        .nav-menu a {
+            color: #ccc; text-decoration: none; font-size: 0.9rem; letter-spacing: 1px; transition: 0.3s; 
+            font-weight: 400; position: relative;
+        }
+        .nav-menu a:hover, .nav-menu a.active { color: var(--gold); }
+        .nav-menu a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent); 
+            transition: width 0.3s;
+        }
+        .nav-menu a:hover::after { width: 100%; }
+
+        .hamburger { display: none; cursor: pointer; color: var(--gold); font-size: 1.5rem; transition: 0.3s; }
+        .hamburger:hover { color: #fff; }
+
+        /* --- 3. HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            position: relative;
+            background: linear-gradient(to bottom, rgba(15,15,15,0.4), rgba(15,15,15,1)), 
+                        url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?q=80&w=2000&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 20%, #0f0f0f 120%);
+        }
+
+        .hero-content { position: relative; z-index: 2; max-width: 800px; }
+
+        .hero-logo-large {
+            width: 180px; /* Un poco más grande para destacar */
+            height: auto;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero h1 { 
+            font-size: 4.5rem; line-height: 1; margin-bottom: 20px; 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            letter-spacing: 2px;
+        }
+        .hero h1 span { 
+            color: var(--gold);
+            background: linear-gradient(to bottom, var(--gold), var(--gold-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Fallback para navegadores antiguos */
+            color: var(--gold); 
+        }
+        
+        .hero p { 
+            color: #dcdcdc; font-size: 1.3rem; margin-bottom: 40px; font-weight: 300;
+        }
+
+        .btn-cta {
+            background: linear-gradient(45deg, var(--gold-dark), var(--gold));
+            color: #000;
+            padding: 15px 45px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            display: inline-block;
+        }
+        .btn-cta:hover { 
+            transform: translateY(-5px) scale(1.05); 
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
+            color: #fff;
+        }
+
+        /* --- 4. CARACTERÍSTICAS --- */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: -50px auto 80px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .feature-box {
+            background: rgba(30, 30, 30, 0.7); /* Un poco más oscuro para legibilidad */
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .feature-box:hover { transform: translateY(-10px); border-color: var(--gold); }
+        .feature-box i { font-size: 2.5rem; color: var(--gold); margin-bottom: 20px; }
+        .feature-box h3 { margin-bottom: 10px; font-size: 1.2rem; }
+        .feature-box p { color: var(--text-gray); font-size: 0.9rem; }
+
+        /* --- 5. CATÁLOGO --- */
+        .section-header { text-align: center; margin-bottom: 60px; position: relative; }
+        .section-header h2 { font-size: 3rem; color: #fff; margin-bottom: 10px; letter-spacing: 3px; }
+        .section-header .subtitle { color: var(--gold); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 4px; display: block; margin-bottom: 10px; }
+        
+        .tabs-wrapper { 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+            margin-bottom: 50px; 
+            flex-wrap: wrap; 
+            width: 100%;
+        }
+        
+        .tab-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid transparent;
+            color: #aaa;
+            padding: 12px 30px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+        
+        .tab-btn.active { background: var(--gold); color: #000; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); font-weight: 700; }
+        .tab-btn:hover:not(.active) { border-color: var(--gold); color: var(--gold); }
+
+        /* GRIDS */
+        .grid-container {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .grid-container.active { display: grid; animation: fadeInUp 0.6s ease; }
+
+        .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+
+        /* TARJETAS */
+        .card {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.05);
+            transform: translateZ(0); 
+        }
+        .card:hover { transform: translateY(-8px); border-color: var(--gold); box-shadow: var(--shadow-hard); }
+
+        .card-img { height: 280px; width: 100%; overflow: hidden; position: relative; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+        .card:hover .card-img img { transform: scale(1.1); }
+
+        .price-badge {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: rgba(0,0,0,0.8);
+            color: var(--gold);
+            padding: 8px 15px;
+            font-weight: 700;
+            font-family: 'Oswald';
+            border-radius: 4px;
+            border: 1px solid var(--gold);
+            backdrop-filter: blur(5px);
+            z-index: 2;
+        }
+        
+        .health-badge { border-color: var(--physio-blue); color: var(--physio-blue); }
+
+        .card-body { padding: 25px; position: relative; z-index: 2; background: var(--bg-card); }
+        .card h3 { color: #fff; font-size: 1.4rem; margin-bottom: 10px; transition: 0.3s; }
+        .card:hover h3 { color: var(--gold); }
+        .card p { color: #999; font-size: 0.95rem; line-height: 1.5; }
+
+        /* Overlay para galería (Efecto Lupa) */
+        .gallery-overlay {
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,0.4);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: 0.3s;
+            pointer-events: none; /* Permite click en imagen si fuera necesario */
+        }
+        .card:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay i { font-size: 2rem; color: var(--gold); transform: scale(0); transition: 0.3s; }
+        .card:hover .gallery-overlay i { transform: scale(1); }
+
+        /* --- 6. FOOTER --- */
+        footer {
+            background-color: #050505;
+            padding: 80px 20px 30px;
+            margin-top: 100px;
+            border-top: 1px solid #222;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h3 { color: var(--gold); margin-bottom: 25px; font-size: 1.5rem; }
+        .footer-col p { color: #888; margin-bottom: 15px; display: flex; gap: 15px; align-items: flex-start; }
+        .footer-col i { color: var(--gold); min-width: 20px; margin-top: 5px; }
+
+        .map-container {
+            width: 100%;
+            height: 300px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid #333;
+            box-shadow: var(--shadow-soft);
+        }
+        .map-container iframe { width: 100%; height: 100%; border: 0; filter: grayscale(100%) invert(92%) contrast(83%); }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #1a1a1a;
+            color: #444;
+            font-size: 0.8rem;
+        }
+
+        /* --- 7. EXTRAS --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            background: #25d366;
+            color: #fff;
+            width: 65px; height: 65px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 35px;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
+            z-index: 100;
+            transition: 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.1) rotate(15deg); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- 8. RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .hero-logo-large { width: 120px; }
+            .tabs-wrapper { gap: 10px; }
+            .tab-btn { padding: 10px 15px; font-size: 0.8rem; flex: 1 1 45%; }
+            .hamburger { display: block; }
+            .nav-menu {
+                position: fixed; top: 0; right: -100%;
+                width: 80%; height: 100vh;
+                background: #111;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: 0.4s;
+                border-left: 1px solid #333;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+            }
+            .nav-menu.active { right: 0; }
+            .nav-menu a { font-size: 1.2rem; margin: 15px 0; }
+            
+            /* Galería móvil en 2 columnas */
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .card-img { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="brand-container">
+            <img src="img/logo/Logo.png" alt="Aron Logo" class="brand-logo-img">
+            <div class="brand-logo-text">ARON</div>
+        </a>
+        
+        <div class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="nav-menu" id="nav-menu">
+            <a href="#" onclick="closeMenu()">Inicio</a>
+            <a href="#catalogo" onclick="closeMenu()">Servicios</a>
+            <a href="#contacto" onclick="closeMenu()">Ubicación</a>
+            <a href="https://wa.me/51989418338" class="btn-cta" style="padding: 10px 20px; font-size: 0.8rem; margin-top: 10px;">Reservar</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content reveal">
+            <!-- Logo Grande en la Portada -->
+            <img src="img/logo/Logo.png" alt="Aron Logo Grande" class="hero-logo-large">
+            <p>BARBERÍA & CENTRO DE TERAPIA</p>
+            <h1>ESTILO Y <br><span>BIENESTAR</span></h1>
+            <p style="color: #bbb;">La fusión perfecta entre la estética masculina moderna y la salud física profesional en Arequipa.</p>
+            <br>
+            <a href="#catalogo" class="btn-cta">Ver Catálogo</a>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features reveal">
+        <div class="feature-box">
+            <i class="fas fa-star"></i>
+            <h3>Calidad Premium</h3>
+            <p>Productos de alta gama y herramientas esterilizadas para tu seguridad.</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-user-clock"></i>
+            <h3>Atención Puntual</h3>
+            <p>Respetamos tu tiempo. Sistema de citas eficiente y sin esperas largas.</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-hand-holding-medical"></i>
+            <h3>Salud Certificada</h3>
+            <p>Fisioterapeutas titulados para tus sesiones de rehabilitación y relax.</p>
+        </div>
+    </section>
+
+    <!-- CATÁLOGO -->
+    <section id="catalogo" class="catalog-section">
+        <div class="section-header reveal">
+            <span class="subtitle">Nuestro Trabajo</span>
+            <h2>CATÁLOGO EXCLUSIVO</h2>
+            <div style="width: 50px; height: 3px; background: var(--gold); margin: 20px auto;"></div>
+        </div>
+
+        <div class="tabs-wrapper reveal">
+            <button class="tab-btn active" onclick="filterServices('barberia')">Barbería</button>
+            <button class="tab-btn" onclick="filterServices('clasicos')">Clásicos</button>
+            <button class="tab-btn" onclick="filterServices('damas')">Damas</button>
+            <button class="tab-btn" onclick="filterServices('ninos')">Niños y Niñas</button>
+            <button class="tab-btn" onclick="filterServices('salud')">Salud</button>
+        </div>
+
+        <!-- 1. BARBERÍA -->
+        <div id="barberia" class="grid-container active">
+            <div class="card"><div class="card-img"><img src="img/low fade.jpeg" loading="lazy" alt="Low Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Low Fade</h3><p>Degradado bajo con navaja. Acabado limpio y moderno.</p></div></div>
+            <div class="card"><div class="card-img"><img src="img/Mid fade.png" loading="lazy" alt="Mid Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Mid Fade</h3><p>El balance perfecto a altura media.</p></div></div>
+            <div class="card"><div class="card-img"><img src="img/High Fade.png" loading="lazy" alt="High Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>High Fade</h3><p>Alto contraste para un estilo urbano.</p></div></div>
+            <div class="card"><div class="card-img"><img src="img/brust fade.png" loading="lazy" alt="Burst Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Burst Fade</h3><p>Degradado circular alrededor de la oreja.</p></div></div>
+            <div class="card"><div class="card-img"><img src="img/taper fade.png" loading="lazy" alt="Taper Fade"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Taper Fade</h3><p>Limpieza suave en patillas y nuca.</p></div></div>
+            <div class="card"><div class="card-img"><img src="img/Mullet.png" loading="lazy" alt="Mullet"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Mullet</h3><p>Estilo clásico renovado.</p></div></div>
+            <div class="card"><div class="card-img"><img src="img/French Crop.png" loading="lazy" alt="French Crop"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>French Crop</h3><p>Flequillo recto y textura superior.</p></div></div>
+            <div class="card"><div class="card-img"><img src="img/Buzz Cut.png" loading="lazy" alt="Buzz Cut"><div class="price-badge">S/ 15.00</div></div><div class="card-body"><h3>Buzz Cut</h3><p>Minimalismo puro y sin mantenimiento.</p></div></div>
+        </div>
+
+        <!-- 2. CLÁSICOS -->
+        <div id="clasicos" class="grid-container gallery-grid">
+            <!-- NOTA: Se añaden overlays para mejor interacción -->
+            <div class="card"><div class="card-img"><img src="img/Corte clasico 1.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/Corte clasico 2.jpeg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte clasico 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte clasico 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte clasico 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte clasico 6.png" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte escolar.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte miliar.jpeg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+        </div>
+
+        <!-- 3. DAMAS -->
+        <div id="damas" class="grid-container gallery-grid">
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 1.jpeg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 2.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 6.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 7.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 8.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 9.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 10.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 11.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para mujer 12.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+        </div>
+
+        <!-- 4. NIÑOS Y NIÑAS -->
+        <div id="ninos" class="grid-container gallery-grid">
+            <div class="card"><div class="card-img"><img src="img/corte para niña 1.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niña 2.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niña 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niña 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niña 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niña 6.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niña 7.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niña 8.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niños1.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niños 2.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niños 3.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niños 4.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niños 5.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niños 6.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niños 7.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+            <div class="card"><div class="card-img"><img src="img/corte para niños 8.jpg" loading="lazy"><div class="gallery-overlay"><i class="fas fa-plus"></i></div></div></div>
+        </div>
+
+        <!-- 5. SALUD -->
+        <div id="salud" class="grid-container">
+            <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=600&auto=format&fit=crop" loading="lazy"><div class="price-badge health-badge">SALUD</div></div><div class="card-body"><h3>Fisioterapia</h3><p>Tratamiento personalizado de lesiones.</p></div></div>
+            <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=600&auto=format&fit=crop" loading="lazy"><div class="price-badge health-badge">RELAX</div></div><div class="card-body"><h3>Masajes</h3><p>Descontracturantes y relajantes.</p></div></div>
+            <div class="card"><div class="card-img"><img src="https://plus.unsplash.com/premium_photo-1661777196224-bfda51e61cfd?q=80&w=600&auto=format&fit=crop" loading="lazy"><div class="price-badge health-badge">REHAB</div></div><div class="card-body"><h3>Rehabilitación</h3><p>Recuperación de movilidad profesional.</p></div></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contacto">
+        <div class="footer-grid">
+            <div class="footer-col reveal">
+                <h3>CONTACTO</h3>
+                <p><i class="fas fa-map-marker-alt"></i> La Isla, Pasadizo 1, Arequipa (Av. Perú 18)</p>
+                <p><i class="fas fa-phone-alt"></i> +51 989 418 338</p>
+                <!-- EMAIL REMOVIDO POR SOLICITUD -->
+                <p style="margin-top: 20px;"><i class="fas fa-clock"></i> Lun - Sáb: 9:00 AM - 5:30 PM</p>
+            </div>
+            <div class="footer-col reveal">
+                <h3>ENCUÉNTRANOS</h3>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3827.294157582236!2d-71.5306631!3d-16.4098935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91424a54c69818b7%3A0x6a9464010e19a9f!2sAv.%20Per%C3%BA%2018%2C%20Arequipa%2004009!5e0!3m2!1ses!2spe!4v1700000000000!5m2!1ses!2spe" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="copyright"><p>&copy; 2025 Aron BarberShop & Wellness Center. Todos los derechos reservados.</p></div>
+    </footer>
+
+    <a href="https://wa.me/51989418338?text=Hola%20Aron,%20quiero%20agendar%20una%20cita." class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <script>
+        function filterServices(category) {
+            document.querySelectorAll('.grid-container').forEach(g => g.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(category).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        const navMenu = document.getElementById('nav-menu');
+        const hamburger = document.getElementById('hamburger');
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.querySelector('i').classList.toggle('fa-times');
+            hamburger.querySelector('i').classList.toggle('fa-bars');
+        });
+
+        function closeMenu() {
+            navMenu.classList.remove('active');
+            hamburger.querySelector('i').classList.add('fa-bars');
+            hamburger.querySelector('i').classList.remove('fa-times');
+        }
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if(window.scrollY > 50) { nav.style.background = 'rgba(10, 10, 10, 0.95)'; nav.style.padding = '5px 5%'; }
+            else { nav.style.background = 'rgba(15, 15, 15, 0.85)'; nav.style.padding = '10px 5%'; }
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) el.classList.add('active');
+            });
+        });
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>
